@@ -49,7 +49,7 @@ class LiveEditor {
       minimap: {
         enabled: false,
       },
-      overviewRulerLanes: 0,
+      overviewRulerLanes: 5,
       scrollBeyondLastLine: false,
       guides: {
         indentation: false,
@@ -67,10 +67,6 @@ class LiveEditor {
       quickSuggestions: this.intellisense && settings.editor_auto_completion,
       tabCompletion: "on",
       suggestSelection: "first",
-      // For Elixir word suggestions are confusing at times.
-      // For example given `defmodule<CURSOR> Foo do`, if the
-      // user opens completion list and then jumps to the end
-      // of the line we would get "defmodule" as a word completion.
       wordBasedSuggestions: !this.intellisense,
       parameterHints: this.intellisense && settings.editor_auto_signature,
       wordWrap: this.language === "markdown" && settings.editor_markdown_word_wrap ? "on" : "off",
