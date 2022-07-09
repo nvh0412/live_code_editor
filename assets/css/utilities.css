@@ -1,0 +1,9 @@
+@layer utilities {
+.bg-editor {
+    background-color: #282c34;
+  }
+
+  body[data-editor-theme="highContrast"] .bg-editor {
+    background-color: #060708;
+  }
+}
