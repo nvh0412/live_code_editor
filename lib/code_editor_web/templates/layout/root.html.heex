@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || "CodeEditor", suffix: " · Phoenix Framework" %>
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
-    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/css/app.css")}/>
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/js/app.js")}></script>
   </head>
   <body>
     <div class="py-12 bg-white">
@@ -15,7 +15,7 @@
         <div class="lg:text-center">
           <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Live Code Editor</h2>
           <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">A better way to CODE together</p>
-          <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.</p>
+          <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">Code, collaborate, share, and more online from your browser</p>
         </div>
 
         <%= @inner_content %>

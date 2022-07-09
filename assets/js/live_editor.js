@@ -23,6 +23,18 @@ class LiveEditor {
     this._mountEditor();
   }
 
+  focus() {
+    this._ensureMounted();
+
+    this.editor.focus();
+  }
+
+  _ensureMounted() {
+    if (!this.isMounted()) {
+      this.mount();
+    }
+  }
+
   _mountEditor() {
     const settings = settingsStore.get();
 

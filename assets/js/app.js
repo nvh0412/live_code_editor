@@ -17,7 +17,9 @@
 //
 //     import "some-package"
 //
+import "../css/app.css";
 import "@fontsource/jetbrains-mono";
+
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html";
@@ -35,8 +37,9 @@ const rootContainer = document.querySelector(`[data-el-editor-container]`);
 const editorEl = document.createElement("div");
 rootContainer.appendChild(editorEl);
 
-const editor = new LiveEditor(editorEl, "javascript", false);
+const editor = new LiveEditor(editorEl, "ruby", false);
 editor.mount();
+editor.focus();
 
 // Show progress bar on live navigation and form submits
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
