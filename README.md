@@ -1,5 +1,7 @@
 # CodeEditor
 
+<img width="919" alt="Screen Shot 2022-07-09 at 18 59 29" src="https://user-images.githubusercontent.com/1973623/178104694-a93077cd-33e8-423d-9fc1-f9b0c6470235.png">
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
