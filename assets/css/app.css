@@ -4,5 +4,6 @@
 
 @import "./global.css";
 @import "./utilities.css";
+@import "./components.css";
 @import "./editor.css";
 @import "./tooltip.css";

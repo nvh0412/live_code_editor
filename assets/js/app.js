@@ -29,7 +29,6 @@ import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 
 import hooks from "./hooks";
-import LiveEditor from "./live_editor";
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 let liveSocket = new LiveSocket(
@@ -40,15 +39,6 @@ let liveSocket = new LiveSocket(
     hooks: hooks
   }
 );
-
-// Show Monaco
-const rootContainer = document.querySelector(`[data-el-editor-container]`);
-const editorEl = document.createElement("div");
-rootContainer.appendChild(editorEl);
-
-const editor = new LiveEditor(editorEl, "ruby", false);
-editor.mount();
-editor.focus();
 
 // Show progress bar on live navigation and form submits
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });

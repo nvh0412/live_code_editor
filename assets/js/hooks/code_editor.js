@@ -1,13 +1,33 @@
+import LiveEditor from "../live_editor";
+
 const CodeEditor = {
   mounted() {
     this.props = this.getProps();
 
-    console.log('mounted', this.props)
+    this.handleEvent(
+      `editor_init:${this.props.editorId}`,
+      ({ source_view, language, intellisense, read_only }) => {
+        const editorContainer = this.el.querySelector(
+          `[data-el-editor-container]`
+        );
+
+        const editorEl = document.createElement("div");
+        editorContainer.appendChild(editorEl);
+
+        this.liveEditor = new LiveEditor(
+          this,
+          editorEl,
+          language,
+          read_only
+        );
+        this.liveEditor.mount();
+      }
+    );
 
     this.handleEvent(
-      `editor_init:${this.props.cellId}:${this.props.tag}`,
+      `editor_update:${this.props.editorId}`,
       ({ source_view, language, intellisense, read_only }) => {
-        debugger
+        this.liveEditor.changeLanguage(language);
       }
     );
   },
@@ -25,4 +45,6 @@ const CodeEditor = {
       editorId: this.el.getAttribute("data-editor-id")
     };
   },
-}
+};
+
+export default CodeEditor;

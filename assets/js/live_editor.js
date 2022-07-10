@@ -2,7 +2,8 @@ import monaco from "./live_editor/monaco";
 import { settingsStore } from "./lib/settings";
 
 class LiveEditor {
-  constructor(container, language, readOnly) {
+  constructor(hook, container, language, readOnly) {
+    this.hook = hook;
     this.container = container;
     this.language = language;
     this.readOnly = readOnly;
@@ -27,6 +28,12 @@ class LiveEditor {
     this._ensureMounted();
 
     this.editor.focus();
+  }
+
+  changeLanguage(language) {
+    this._ensureMounted();
+
+    monaco.editor.setModelLanguage(this.editor.getModel(), language);
   }
 
   _ensureMounted() {

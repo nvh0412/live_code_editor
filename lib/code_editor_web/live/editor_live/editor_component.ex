@@ -16,6 +16,12 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
     socket =
       if not connected?(socket) or socket.assigns.initialized do
         socket
+        |> push_event(
+          "editor_update:#{socket.assigns.editor_view.id}",
+          %{
+            language: socket.assigns.language
+          }
+        )
       else
         socket
         |> push_event(
@@ -34,23 +40,27 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="flex flex-col relative"
+    <div class="flex flex-col relative w-full"
       data-el-cell
-      id={"editor-#{@editor_view.id}"}
-      data-editor-id={@editor_view.id}
-      data-focusable-id={@editor_view.id}
+      id={"container-#{@editor_view.id}"}
     >
-      <%= render_cell(assigns) %>
+      <%= render_editor(assigns) %>
     </div>
     """
   end
 
-  defp render_cell(%{editor_view: %{type: :code}} = assigns) do
+  defp render_editor(%{editor_view: %{type: :code}} = assigns) do
     ~H"""
+    <div class="menu" id={@id}>
+      <menu class={"menu__content"}>
+      </menu>
+    </div>
     <.cell_body>
       <div class="relative"
-        id="editor-1"
+        id="editor-2"
         phx-update="ignore"
+        data-editor-id={@editor_view.id}
+        data-focusable-id={@editor_view.id}
         phx-hook="CodeEditor">
         <div class="mt-4 py-3 rounded-lg bg-editor h-full" data-el-editor-container />
       </div>
@@ -63,8 +73,6 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
     <!-- By setting tabindex we can programmatically focus this element,
          also we actually want to make this element tab-focusable -->
     <div class="flex relative" data-el-cell-body tabindex="0">
-      <div class="w-1 h-full rounded-lg absolute top-0 -left-3" data-el-cell-focus-indicator>
-      </div>
       <div class="w-full">
         <%= render_slot(@inner_block) %>
       </div>
