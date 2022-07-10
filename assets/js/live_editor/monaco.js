@@ -11,8 +11,6 @@ document.fonts.addEventListener("loadingdone", (event) => {
     (fontFace) => fontFace.family.includes("JetBrains Mono")
   );
 
-  console.log(jetBrainsMonoLoaded)
-
   if (jetBrainsMonoLoaded) {
     // We use JetBrains Mono in all instances of the editor,
     // so we wait until it loads and then tell Monaco to remeasure
