@@ -1,6 +1,8 @@
 defmodule CodeEditorWeb.EditorLive.EditorComponent do
   use CodeEditorWeb, :live_component
 
+  alias Phoenix.LiveView.JS
+
   @impl true
   def mount(socket) do
     {:ok, assign(socket, initialized: false)}
@@ -52,7 +54,28 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
   defp render_editor(%{editor_view: %{type: :code}} = assigns) do
     ~H"""
     <div class="menu" id={@id}>
-      <menu class={"menu__content"}>
+      <div
+        phx-click={JS.add_class("menu--open", to: "[id^='#{@id}']")}
+        phx-window-keydown={JS.remove_class("menu--open", to: "[id^='#{@id}']")}
+        phx-key="escape">
+        <button class="button-base">Language</button>
+      </div>
+      <menu class="menu__content mt-0.5" role="menu" phx-click-away={JS.remove_class("menu--open", to: "[id^='#{@id}']")}}>
+        <button
+          class="menu-item" role="menuitem"
+          phx-click="change_language"
+          phx-value-language="ruby"
+        ><i class="devicon-ruby-plain mr-1 text-red-600"/>Ruby</button>
+        <button
+          class="menu-item" role="menuitem"
+          phx-click="change_language"
+          phx-value-language="javascript"
+        ><i class="devicon-javascript-plain mr-1 text-yellow-600"/>Javascript</button>
+        <button
+          class="menu-item" role="menuitem"
+          phx-click="change_language"
+          phx-value-language="sql"
+        ><i class="ri-database-2-line mr-1 text-gray-600"/>SQL</button>
       </menu>
     </div>
     <.cell_body>
