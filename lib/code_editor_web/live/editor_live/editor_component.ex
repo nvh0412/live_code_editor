@@ -1,8 +1,6 @@
 defmodule CodeEditorWeb.EditorLive.EditorComponent do
   use CodeEditorWeb, :live_component
 
-  alias Phoenix.LiveView.JS
-
   @impl true
   def mount(socket) do
     {:ok, assign(socket, initialized: false)}
@@ -21,6 +19,7 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
         |> push_event(
           "editor_update:#{socket.assigns.editor_view.id}",
           %{
+            editorId: socket.assigns.editor_view.id,
             language: socket.assigns.language
           }
         )
@@ -42,7 +41,7 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="flex flex-col relative w-full"
+    <div class="relative w-full"
       data-el-cell
       id={"container-#{@editor_view.id}"}
     >
@@ -53,34 +52,33 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
 
   defp render_editor(%{editor_view: %{type: :code}} = assigns) do
     ~H"""
-    <div class="menu" id={@id}>
-      <div
-        phx-click={JS.add_class("menu--open", to: "[id^='#{@id}']")}
-        phx-window-keydown={JS.remove_class("menu--open", to: "[id^='#{@id}']")}
-        phx-key="escape">
-        <button class="button-base">Language</button>
-      </div>
-      <menu class="menu__content mt-0.5" role="menu" phx-click-away={JS.remove_class("menu--open", to: "[id^='#{@id}']")}}>
-        <button
-          class="menu-item" role="menuitem"
-          phx-click="change_language"
-          phx-value-language="ruby"
-        ><i class="devicon-ruby-plain mr-1 text-red-600"/>Ruby</button>
-        <button
-          class="menu-item" role="menuitem"
-          phx-click="change_language"
-          phx-value-language="javascript"
-        ><i class="devicon-javascript-plain mr-1 text-yellow-600"/>Javascript</button>
-        <button
-          class="menu-item" role="menuitem"
-          phx-click="change_language"
-          phx-value-language="sql"
-        ><i class="ri-database-2-line mr-1 text-gray-600"/>SQL</button>
-      </menu>
+    <div class="flex justify-end">
+      <.menu id={"menu-#{@editor_view.id}"}>
+        <:toggle>
+          <button class="button-base w-28"><%= String.capitalize(assigns.language) %></button>
+        </:toggle>
+        <:content>
+          <button
+            class="menu-item" role="menuitem"
+            phx-click="change_language"
+            phx-value-language="ruby"
+          ><i class="devicon-ruby-plain mr-1 text-red-600"/>Ruby</button>
+          <button
+            class="menu-item" role="menuitem"
+            phx-click="change_language"
+            phx-value-language="javascript"
+          ><i class="devicon-javascript-plain mr-1 text-yellow-600"/>Javascript</button>
+          <button
+            class="menu-item" role="menuitem"
+            phx-click="change_language"
+            phx-value-language="sql"
+          ><i class="ri-database-2-line mr-1 text-gray-600"/>SQL</button>
+        </:content>
+      </.menu>
     </div>
     <.cell_body>
       <div class="relative"
-        id="editor-2"
+        id="editor-container"
         phx-update="ignore"
         data-editor-id={@editor_view.id}
         data-focusable-id={@editor_view.id}
@@ -95,7 +93,7 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
     ~H"""
     <!-- By setting tabindex we can programmatically focus this element,
          also we actually want to make this element tab-focusable -->
-    <div class="flex relative" data-el-cell-body tabindex="0">
+    <div class="flex relative w-full" data-el-cell-body tabindex="0">
       <div class="w-full">
         <%= render_slot(@inner_block) %>
       </div>

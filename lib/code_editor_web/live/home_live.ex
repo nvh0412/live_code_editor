@@ -28,7 +28,7 @@ defmodule CodeEditorWeb.HomeLive do
     ~H"""
     <div class="flex">
       <.live_component module={CodeEditorWeb.EditorLive.EditorComponent}
-        id={"1_primary"}
+        id={"1"}
         language={language}
         read_only={false}
         editor_view={editor_view}/>

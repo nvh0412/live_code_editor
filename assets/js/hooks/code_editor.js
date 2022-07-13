@@ -21,13 +21,17 @@ const CodeEditor = {
           read_only
         );
         this.liveEditor.mount();
+
       }
     );
 
     this.handleEvent(
       `editor_update:${this.props.editorId}`,
-      ({ source_view, language, intellisense, read_only }) => {
+      ({ editorId, language }) => {
         this.liveEditor.changeLanguage(language);
+
+        const editor = document.getElementById(`menu-${editorId}`);
+        if (editor) editor.classList.remove('menu--open');
       }
     );
   },

@@ -97,6 +97,8 @@ defmodule CodeEditorWeb do
 
       import CodeEditorWeb.ErrorHelpers
       import CodeEditorWeb.Gettext
+      import CodeEditorWeb.LiveHelpers
+
       alias CodeEditorWeb.Router.Helpers, as: Routes
     end
   end
