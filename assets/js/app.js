@@ -19,27 +19,26 @@
 //
 import "../css/app.css";
 import "@fontsource/jetbrains-mono";
-
+import "remixicon/fonts/remixicon.css";
+import "devicon";
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html";
-// Establish Phoenix Socket and LiveView configuration.
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
-import LiveEditor from "./live_editor";
+
+import hooks from "./hooks";
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken } });
-
-// Show Monaco
-const rootContainer = document.querySelector(`[data-el-editor-container]`);
-const editorEl = document.createElement("div");
-rootContainer.appendChild(editorEl);
-
-const editor = new LiveEditor(editorEl, "ruby", false);
-editor.mount();
-editor.focus();
+let liveSocket = new LiveSocket(
+  "/live",
+  Socket,
+  {
+    params: { _csrf_token: csrfToken },
+    hooks: hooks
+  }
+);
 
 // Show progress bar on live navigation and form submits
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });

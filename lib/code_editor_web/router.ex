@@ -25,6 +25,12 @@ defmodule CodeEditorWeb.Router do
   #   pipe_through :api
   # end
 
+  live_session :default do
+    scope "/", CodeEditorWeb do
+      live "/editor", HomeLive, :page
+    end
+  end
+
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put
