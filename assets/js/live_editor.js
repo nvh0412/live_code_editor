@@ -2,11 +2,12 @@ import monaco from "./live_editor/monaco";
 import { settingsStore } from "./lib/settings";
 
 class LiveEditor {
-  constructor(hook, container, language, readOnly) {
+  constructor(hook, container, language, source, readOnly) {
     this.hook = hook;
     this.container = container;
     this.language = language;
     this.readOnly = readOnly;
+    this.source = source;
 
     this._onMount = [];
     this._onChange = [];

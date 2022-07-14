@@ -18,10 +18,10 @@ const CodeEditor = {
           this,
           editorEl,
           language,
+          source_view.source,
           read_only
         );
         this.liveEditor.mount();
-
       }
     );
 

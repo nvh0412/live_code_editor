@@ -28,5 +28,15 @@ defmodule CodeEditorWeb.LiveHelpers do
       </div>
     """
   end
+
+  def remix_icon(assigns) do
+    assigns = assigns
+              |> assign_new(:class, fn -> "" end)
+              |> assign(:attrs, assigns_to_attributes(assigns, [:icon, :class]))
+
+    ~H"""
+    <i class={"ri-#{@icon} #{@class}"} aria-hidden="true" {@attrs}></i>
+    """
+  end
 end
 

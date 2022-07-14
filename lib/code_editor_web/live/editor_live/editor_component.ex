@@ -28,6 +28,7 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
         |> push_event(
           "editor_init:#{socket.assigns.editor_view.id}",
           %{
+            source_view: socket.assigns.source_view,
             language: socket.assigns.language,
             read_only: socket.assigns.read_only
           }
@@ -52,7 +53,12 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
 
   defp render_editor(%{editor_view: %{type: :code}} = assigns) do
     ~H"""
-    <div class="flex justify-end">
+    <div class="flex justify-between">
+      <.cell_evaluation_button
+        socket={@socket}
+        status={:ready}
+        cell_id={@editor_view.id}
+      />
       <.menu id={"menu-#{@editor_view.id}"}>
         <:toggle>
           <button class="button-base w-28"><%= String.capitalize(assigns.language) %></button>
@@ -98,6 +104,20 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
         <%= render_slot(@inner_block) %>
       </div>
     </div>
+    """
+  end
+
+  defp cell_evaluation_button(%{status: :ready} = assigns) do
+    ~H"""
+    <button class="text-gray-600 hover:text-gray-800 focus:text-gray-800 flex space-x-1 items-center"
+      data-el-queue-cell-evaluation-button
+      data-cell-id={@cell_id}
+    >
+      <.remix_icon icon="play-circle-fill" class="text-xl" />
+      <span class="text-sm font-medium">
+        Evaluate
+      </span>
+    </button>
     """
   end
 end

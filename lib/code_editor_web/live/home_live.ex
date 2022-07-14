@@ -25,11 +25,21 @@ defmodule CodeEditorWeb.HomeLive do
       type: :code,
     }
 
+    source_init = """
+    // the hello world program
+    alert("Hello, World!");
+    """
+
+    source = 0..30
+             |> Enum.to_list
+             |> Enum.reduce(source_init, fn _x, acc -> "#{acc}\n" end)
+
     ~H"""
     <div class="flex">
       <.live_component module={CodeEditorWeb.EditorLive.EditorComponent}
         id={"1"}
         language={language}
+        source_view={%{"source" => source}},
         read_only={false}
         editor_view={editor_view}/>
     </div>
