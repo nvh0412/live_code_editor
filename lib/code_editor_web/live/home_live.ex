@@ -35,7 +35,11 @@ defmodule CodeEditorWeb.HomeLive do
              |> Enum.reduce(source_init, fn _x, acc -> "#{acc}\n" end)
 
     ~H"""
-    <div class="flex">
+    <div class="flex"
+      id={"session-1"}
+      data-el-session
+      phx-hook="Session"
+    >
       <.live_component module={CodeEditorWeb.EditorLive.EditorComponent}
         id={"1"}
         language={language}
