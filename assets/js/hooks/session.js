@@ -1,7 +1,6 @@
-
 const Session = {
   mounted() {
-    console.log('Mounted')
+    this.focusedId = null;
 
     this._handleDocumentClick = this.handleDocumentClick.bind(this);
     document.addEventListener("click", this._handleDocumentClick);
@@ -17,6 +16,8 @@ const Session = {
     );
 
     if (evalBtn) {
+      const focusableEl = event.target.closest(`[data-el-cell]`);
+      this.pushEvent("queue_code_evaluation", { editor_id: focusableEl });
     }
   }
 };

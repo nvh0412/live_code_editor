@@ -12,8 +12,12 @@ defmodule CodeEditor.Application do
       CodeEditor.Repo,
       # Start the Telemetry supervisor
       CodeEditorWeb.Telemetry,
+      # Start the DynamicSupervisor to manage Session
+      {DynamicSupervisor, name: CodeEditor.SessionSupervisor, strategy: :one_for_one},
       # Start the PubSub system
       {Phoenix.PubSub, name: CodeEditor.PubSub},
+      # Start the Tracker server
+      {CodeEditor.Tracker, pubsub_server: CodeEditor.PubSub},
       # Start the Endpoint (http/https)
       CodeEditorWeb.Endpoint
       # Start a worker by calling: CodeEditor.Worker.start_link(arg)
