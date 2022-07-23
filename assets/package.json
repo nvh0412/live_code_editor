@@ -19,6 +19,7 @@
     "phoenix_html": "file:../deps/phoenix_html",
     "phoenix_live_view": "file:../deps/phoenix_live_view",
     "process": "^0.11.10",
+    "quill-delta": "^5.0.0",
     "remixicon": "^2.5.0",
     "scroll-into-view-if-needed": "^2.2.28",
     "tailwindcss": "^3.0.8",

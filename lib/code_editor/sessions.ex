@@ -2,11 +2,9 @@ defmodule CodeEditor.Sessions do
   # This module is responsible for starting and discovering a session
   alias CodeEditor.{Session, Utils}
 
-  def create_session do
+  def create_session(opts \\ []) do
     id = Utils.random_node_aware_id
-
-    # TODO: extends this opts, allow caller to pass it as a param
-    opts = Keyword.put([], :id, id)
+    opts = Keyword.put(opts, :id, id)
 
     case DynamicSupervisor.start_child(CodeEditor.SessionSupervisor, {Session, opts}) do
       {:ok, pid} ->

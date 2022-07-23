@@ -16,8 +16,8 @@ const Session = {
     );
 
     if (evalBtn) {
-      const focusableEl = event.target.closest(`[data-el-cell]`);
-      this.pushEvent("queue_code_evaluation", { editor_id: focusableEl });
+      const editorId = evalBtn.getAttribute("data-editor-id");
+      this.pushEvent("queue_code_evaluation", { editor_id: editorId });
     }
   }
 };

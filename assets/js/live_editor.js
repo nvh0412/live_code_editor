@@ -1,13 +1,20 @@
 import monaco from "./live_editor/monaco";
 import { settingsStore } from "./lib/settings";
+import MonacoEditorAdapter from "./live_editor/monaco_editor_adapter";
+import HookServerAdapter from "./live_editor/hook_server_adapter";
+import EditorClient from "./live_editor/editor_client";
 
 class LiveEditor {
-  constructor(hook, container, language, source, readOnly) {
+  constructor(hook, container, editorId, language, source, readOnly) {
     this.hook = hook;
+    this.editorId = editorId;
     this.container = container;
     this.language = language;
     this.readOnly = readOnly;
     this.source = source;
+
+    const serverAdapter = new HookServerAdapter(hook, editorId);
+    this.editorClient = new EditorClient(serverAdapter);
 
     this._onMount = [];
     this._onChange = [];
@@ -23,6 +30,8 @@ class LiveEditor {
     }
 
     this._mountEditor();
+
+    this.editorClient.setEditorAdapter(new MonacoEditorAdapter(this.editor));
   }
 
   focus() {

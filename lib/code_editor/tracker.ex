@@ -45,7 +45,7 @@ defmodule CodeEditor.Tracker do
 
     messages =
       for id <- Enum.uniq(Map.keys(joins) ++ Map.keys(leaves)) do
-        case {joins[id], leaves[:id]} do
+        case {joins[id], leaves[id]} do
           {%{session: session}, nil} -> {:session_created, session}
           {nil, %{session: session}} -> {:session_closed, session}
           {%{session: session}, %{}} -> {:session_updated, session}

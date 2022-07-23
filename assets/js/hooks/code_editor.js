@@ -17,6 +17,7 @@ const CodeEditor = {
         this.liveEditor = new LiveEditor(
           this,
           editorEl,
+          this.props.editorId,
           language,
           source_view.source,
           read_only

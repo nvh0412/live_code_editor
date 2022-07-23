@@ -57,7 +57,7 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
       <.cell_evaluation_button
         socket={@socket}
         status={:ready}
-        cell_id={@editor_view.id}
+        editor_id={@editor_view.id}
       />
       <.menu id={"menu-#{@editor_view.id}"}>
         <:toggle>
@@ -79,6 +79,11 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
             phx-click="change_language"
             phx-value-language="sql"
           ><i class="ri-database-2-line mr-1 text-gray-600"/>SQL</button>
+          <button
+            class="menu-item" role="menuitem"
+            phx-click="change_language"
+            phx-value-language="elixir"
+          ><i class="devicon-elixir-plain colored mr-1 text-gray-600"/>Elixir</button>
         </:content>
       </.menu>
     </div>
@@ -111,7 +116,7 @@ defmodule CodeEditorWeb.EditorLive.EditorComponent do
     ~H"""
     <button class="text-gray-600 hover:text-gray-800 focus:text-gray-800 flex space-x-1 items-center"
       data-el-queue-cell-evaluation-button
-      data-cell-id={@cell_id}
+      data-editor-id={@editor_id}
     >
       <.remix_icon icon="play-circle-fill" class="text-xl" />
       <span class="text-sm font-medium">

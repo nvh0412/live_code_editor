@@ -55,7 +55,7 @@ module.exports = (env, options) => {
       }),
       new MiniCssExtractPlugin({ filename: "../css/app.css" }),
       new MonacoWebpackPlugin({
-        languages: ["markdown", "ruby", "java", "javascript", "json", "sql", "html", "css"],
+        languages: ["markdown", "ruby", "java", "javascript", "json", "sql", "elixir"],
       }),
     ],
     optimization: {
