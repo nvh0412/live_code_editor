@@ -7,6 +7,10 @@ defmodule CodeEditor.Utils do
     Base.encode32(binary, case: :lower)
   end
 
+  def random_id do
+    :crypto.strong_rand_bytes(20) |> Base.encode32(case: :lower)
+  end
+
   defp node_hash(node) do
     node_str = Atom.to_string(node)
     :erlang.md5(node_str)

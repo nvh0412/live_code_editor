@@ -35,6 +35,10 @@ defmodule CodeEditor.Session do
     GenServer.call(pid, :get_data, @timeout)
   end
 
+  def register_client(pid, client_id, user_id) do
+    GenServer.call(pid, {:register_client, client_id, user_id}, @timeout)
+  end
+
   def close(pid) do
     GenServer.call(pid, :close, @timeout)
     :ok
@@ -52,6 +56,15 @@ defmodule CodeEditor.Session do
   @impl true
   def handle_call(:describe_self, _from, state) do
     {:reply, self_from_state(state), state}
+  end
+
+  @impl true
+  def handle_call({:register_client, client_pid, user}, _from, state) do
+    Process.monitor(client_pid)
+
+    state = handle_operation(state, {:client_join, client_pid, user})
+
+    {:reply, state.data, state}
   end
 
   defp self_from_state(state) do

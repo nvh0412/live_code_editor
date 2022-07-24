@@ -2,6 +2,7 @@ defmodule CodeEditorWeb.HomeLive do
   use CodeEditorWeb, :live_view
 
   alias CodeEditor.{Sessions, Data, Session, CodeView}
+  alias CodeEditor.Users.User
 
   @impl true
   def mount(_params, _session, socket) do
@@ -22,6 +23,8 @@ defmodule CodeEditorWeb.HomeLive do
     {:ok, session } = Sessions.create_session([editor_view: editor_view])
 
     Session.subscribe(session.id)
+
+    Session.register_client(session.pid, self(), User.new)
 
     socket = socket
              |> assign(session: session)
