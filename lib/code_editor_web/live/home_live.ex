@@ -40,7 +40,6 @@ defmodule CodeEditorWeb.HomeLive do
 
   @impl true
   def handle_event("queue_code_evaluation", %{"editor_id" => editor_id}, socket) do
-    ## Init a session process
     Session.queue_code_evaluation(socket.assigns.session.pid, editor_id)
 
     {:noreply, socket}

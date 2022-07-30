@@ -131,10 +131,6 @@ defmodule CodeEditor.Session do
     Enum.reduce(actions, state, &handle_action(&2, &1))
   end
 
-  defp handle_action(state, operation) do
-    state
-  end
-
   defp handle_action(state, _action), do: state
 
   defp init_state(id, opts) do

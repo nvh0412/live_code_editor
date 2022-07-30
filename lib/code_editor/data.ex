@@ -15,8 +15,16 @@ defmodule CodeEditor.Data do
   end
 
   def apply_operation(data, operation)
-  def apply_operation(data, {:queue_code_evaluation, client_pid, editor_id}) do
-    {:ok, data, []}
+  def apply_operation(data, {:queue_code_evaluation, _client_pid, editor_id}) do
+    IO.inspect data
+
+    data.view_infos
+      |> Enum.filter(fn {_k, info} -> info.eval.status == :ready end)
+      |> Enum.reduce(with_actions(data), fn view, data_actions ->
+        data_actions
+        |> queue_cell_evaluation(view, editor_id)
+      end)
+      |> wrap_ok()
   end
   def apply_operation(data, {:apply_view_delta, client_pid, editor_id, delta}) do
     data
@@ -34,6 +42,22 @@ defmodule CodeEditor.Data do
     else
       _ -> :error
     end
+  end
+
+  defp queue_cell_evaluation({data, _} = data_actions, {_, v}, editor_id) do
+    new_view_info = update_in(v.eval.status, fn
+      :ready -> :queued
+      other -> other
+    end)
+
+    view_infos = Map.replace!(
+      data.view_infos,
+      String.to_atom(editor_id),
+      new_view_info
+    )
+
+    data_actions
+    |> set!(view_infos: view_infos)
   end
 
   defp with_actions(data, actions \\ []), do: { data, actions }
